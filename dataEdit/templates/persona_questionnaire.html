@@ -1,0 +1,315 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width,
+        initial-scale=1, shrink-to-fit=no">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+            
+        <title>ペルソナ作成アンケート</title>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+        
+    </head>
+    <body style="background-color: beige;">
+    　<div class="form-wrapper">
+        <form
+            action="https://docs.google.com/forms/u/0/d/e/1FAIpQLSdHFE2W1x-_Hhf0bGVWUljPxNcoHBk6nzV3xYk-PNGJwg-FgQ/formResponse"
+            id="form">
+            <div style="background-color: burlywood;">
+            <div class="mb-3 ml-3">
+                <label for="academicNumber"><strong>学籍番号(半角数字10桁)</strong></label>
+                <input type="text" name="entry.987412342" id="academicNumber" required>
+            </div>
+            </div>
+            <div style="background-color: burlywood;">
+            <p class="ml-3"><strong>年次(1回生の人は2回生を選択してください)</strong></p>
+            <div class="row ml-3 mb-3">
+                <div class="col-1">二回生<input type="radio" name="entry.1066412197" required value="二回生">  
+                </div>
+                <div class="col-1">三回生<input type="radio" name="entry.1066412197" required value="三回生">
+                </div>
+                <div class="col-1">四回生<input type="radio" name="entry.1066412197" required value="四回生">
+                </div>
+            </div>
+            </div>
+            <div style="background-color: burlywood;">
+            <p class="ml-3"><strong>性別</strong></p>
+            <div class="row ml-3 mb-3">
+                <div class="col-1">男性<input type="radio" name="entry.137749468" required value="男性">
+                </div>
+                <div class="col-1">女性<input type="radio" name="entry.137749468" required value="女性">
+                </div>
+            </div>
+            </div>
+
+            <div style="background-color: burlywood;">
+            <p class="ml-3"><strong>住んでいる場所</strong></p>
+            <div class="row ml-3 mb-3">
+                <div class="col-1">京都府<input type="radio" name="entry.2009491597" required value="京都府">
+                </div>
+                <div class="col-1">大阪府<input type="radio" name="entry.2009491597" required value="大阪府">
+                </div>
+                <div class="col-1">奈良県<input type="radio" name="entry.2009491597" required value="奈良県">
+                </div>
+                <div class="col-1">滋賀県<input type="radio" name="entry.2009491597" required value="滋賀県">
+                </div>
+                <div class="col-1">兵庫県<input type="radio" name="entry.2009491597" required value="兵庫県">
+                </div>
+                <div class="col-1">それ以外<input type="radio" name="entry.2009491597" required value="それ以外">
+                </div>
+            </div>
+            </div>
+
+            <div style="background-color: burlywood;">
+            <p class="ml-3"><strong>出身校は同志社系列ですか。それ以外ですか。</strong></p>
+            <div class="row ml-3 mb-3">
+                <div class="col-2">同志社系列<input type="radio" name="entry.688405298" required value="同志社系列">
+                </div>
+                <div class="col-1">それ以外<input type="radio" name="entry.688405298" required value="それ以外">
+                </div>
+            </div>
+            </div>
+
+            <div style="background-color: burlywood;">
+            <p class="ml-3"><strong>物事の考え方を教えてください その１</strong></p>
+            <div class="row ml-3 mb-3">
+                <div class="col-2">ネガティブ<input type="radio" name="entry.1444973867" required value="1">
+                </div>
+                <div class="col-2">ややネガティブ<input type="radio" name="entry.1444973867" required value="2">
+                </div>
+                <div class="col-2">どちらでもない<input type="radio" name="entry.1444973867" required value="3">
+                </div>
+                <div class="col-2">ややポジティブ<input type="radio" name="entry.1444973867" required value="4">
+                </div>
+                <div class="col-2">ポジティブ<input type="radio" name="entry.1444973867" required value="5">
+                </div>
+            </div>
+            </div>
+
+            <div style="background-color: burlywood;">
+            <p class="ml-3"><strong>物事の考え方を教えてください その2</strong></p>
+            <div class="row ml-3 mb-3">
+                <div class="col-2">周りとの関係重視<input type="radio" name="entry.459101127" required value="1">
+                </div>
+                <div class="col-2">やや周りとの関係重視<input type="radio" name="entry.459101127" required value="2">
+                </div>
+                <div class="col-2">どちらでもない<input type="radio" name="entry.459101127" required value="3">
+                </div>
+                <div class="col-2">やや自分重視<input type="radio" name="entry.459101127" required value="4">
+                </div>
+                <div class="col-1">自分重視<input type="radio" name="entry.459101127" required value="5">
+                </div>
+            </div>
+            </div>
+
+            <div style="background-color: burlywood;">
+            <p class="ml-3"><strong>学部卒業後は進学・就職のどちらの予定ですか</strong></p>
+            <div class="row ml-3 mb-3">
+                <div class="col-1">進学<input type="radio" name="entry.719913191" required value="1">
+                </div>
+                <div class="col-1">進学寄り<input type="radio" name="entry.719913191" required value="2">
+                </div>
+                <div class="col-2">どちらでもない<input type="radio" name="entry.719913191" required value="3">
+                </div>
+                <div class="col-1">就職寄り<input type="radio" name="entry.719913191" required value="4">
+                </div>
+                <div class="col-1">就職<input type="radio" name="entry.719913191" required value="5">
+                </div>
+            </div>
+            </div>
+
+            <div style="background-color: burlywood;">
+            <p class="ml-3"><strong>(就職・就職よりを選んだ方)下記の職業への志望度はどのくらいですか</strong></p>
+            <div class="row mb-3 ml-3">
+                    <p class="col-12 mb-2">研究開発職</p>
+                    <div class="ml-2 col-1 mb-3">0%<input type="radio" name="entry.2107137773" required value="0%">
+                    </div>
+                    <div class="ml-2 col-1">20%<input type="radio" name="entry.2107137773" required value="20%">
+                    </div>
+                    <div class="ml-2 col-1">50%<input type="radio" name="entry.2107137773" required value="50%">
+                    </div>
+                    <div class="ml-2 col-1">80%<input type="radio" name="entry.2107137773" required value="80%">
+                    </div>
+                    <div class="ml-2 col-1">100%<input type="radio" name="entry.2107137773" required value="100%">
+                    </div>
+
+                    <p class="col-12 mb-2">営業職</p>
+                    <div class="ml-2 col-1 mb-3">0%<input type="radio" name="entry.377140676" required value="0%">
+                    </div>
+                    <div class="ml-2 col-1">20%<input type="radio" name="entry.377140676" required value="20%">
+                    </div>
+                    <div class="ml-2 col-1">50%<input type="radio" name="entry.377140676" required value="50%">
+                    </div>
+                    <div class="ml-2 col-1">80%<input type="radio" name="entry.377140676" required value="80%">
+                    </div>
+                    <div class="ml-2 col-1">100%<input type="radio" name="entry.377140676" required value="100%">
+                    </div>
+
+                    <p class="col-12 mb-2">コンサルティング職</p>
+                    <div class="ml-2 col-1 mb-3">0%<input type="radio" name="entry.868368441" required value="0%">
+                    </div>
+                    <div class="ml-2 col-1">20%<input type="radio" name="entry.868368441" required value="20%">
+                    </div>
+                    <div class="ml-2 col-1">50%<input type="radio" name="entry.868368441" required value="50%">
+                    </div>
+                    <div class="ml-2 col-1">80%<input type="radio" name="entry.868368441" required value="80%">
+                    </div>
+                    <div class="ml-2 col-1">100%<input type="radio" name="entry.868368441" required value="100%">
+                    </div>
+
+                    <p class="col-12 mb-2">マネジメント職</p>
+                    <div class="ml-2 col-1 mb-3">0%<input type="radio" name="entry.2145386178" required value="0%">
+                    </div>
+                    <div class="ml-2 col-1">20%<input type="radio" name="entry.2145386178" required value="20%">
+                    </div>
+                    <div class="ml-2 col-1">50%<input type="radio" name="entry.2145386178" required value="50%">
+                    </div>
+                    <div class="ml-2 col-1">80%<input type="radio" name="entry.2145386178" required value="80%">
+                    </div>
+                    <div class="ml-2 col-1">100%<input type="radio" name="entry.2145386178" required value="100%">
+                    </div>
+
+                    <p class="col-12 mb-2">マーケティング職</p>
+                    <div class="ml-2 col-1 mb-3">0%<input type="radio" name="entry.1325507708" required value="0%">
+                    </div>
+                    <div class="ml-2 col-1">20%<input type="radio" name="entry.1325507708" required value="20%">
+                    </div>
+                    <div class="ml-2 col-1">50%<input type="radio" name="entry.1325507708" required value="50%">
+                    </div>
+                    <div class="ml-2 col-1">80%<input type="radio" name="entry.1325507708" required value="80%">
+                    </div>
+                    <div class="ml-2 col-1">100%<input type="radio" name="entry.1325507708" required value="100%">
+                    </div>
+
+                    <p class="col-12 mb-2">その他</p>
+                    <div class="ml-2 col-1 mb-3">0%<input type="radio" name="entry.917286135" required value="0%">
+                    </div>
+                    <div class="ml-2 col-1">20%<input type="radio" name="entry.917286135" required value="20%">
+                    </div>
+                    <div class="ml-2 col-1">50%<input type="radio" name="entry.917286135" required value="50%">
+                    </div>
+                    <div class="ml-2 col-1">80%<input type="radio" name="entry.917286135" required value="80%">
+                    </div>
+                    <div class="ml-2 col-1">100%<input type="radio" name="entry.917286135" required value="100%">
+                    </div>
+            </div>
+            </div>
+
+            <div style="background-color: burlywood;">
+            <p class="ml-3"><strong>履修の際、下記の観点をどの程度重視しましたか</strong></p>
+            <div class="row mb-3 ml-3">
+                    <p class="col-12 mb-2">将来・就職</p>
+                    <div class="ml-2 col-2 mb-3">全く重視しない<input type="radio" name="entry.569582830" required value="全く重視しない">
+                    </div>
+                    <div class="ml-2 col-2">重視しない<input type="radio" name="entry.569582830" required value="重視しない">
+                    </div>
+                    <div class="ml-2 col-2">どちらでもない<input type="radio" name="entry.569582830" required value="どちらでもない">
+                    </div>
+                    <div class="ml-2 col-2">重視する<input type="radio" name="entry.569582830" required value="重視する">
+                    </div>
+                    <div class="ml-2 col-2">かなり重視する<input type="radio" name="entry.569582830" required value="かなり重視する">
+                    </div>
+
+                    <p class="col-12 mb-2">自分の学びたい学問</p>
+                    <div class="ml-2 col-2 mb-3">全く重視しない<input type="radio" name="entry.1713232154" required value="全く重視しない">
+                    </div>
+                    <div class="ml-2 col-2">重視しない<input type="radio" name="entry.1713232154" required value="重視しない">
+                    </div>
+                    <div class="ml-2 col-2">どちらでもない<input type="radio" name="entry.1713232154" required value="どちらでもない">
+                    </div>
+                    <div class="ml-2 col-2">重視する<input type="radio" name="entry.1713232154" required value="重視する">
+                    </div>
+                    <div class="ml-2 col-2">かなり重視する<input type="radio" name="entry.1713232154" required value="かなり重視する">
+                    </div>
+
+                    <p class="col-12 mb-2">講義の難易度</p>
+                    <div class="ml-2 col-2 mb-3">全く重視しない<input type="radio" name="entry.483346271" required value="全く重視しない">
+                    </div>
+                    <div class="ml-2 col-2">重視しない<input type="radio" name="entry.483346271" required value="重視しない">
+                    </div>
+                    <div class="ml-2 col-2">どちらでもない<input type="radio" name="entry.483346271" required value="どちらでもない">
+                    </div>
+                    <div class="ml-2 col-2">重視する<input type="radio" name="entry.483346271" required value="重視する">
+                    </div>
+                    <div class="ml-2 col-2">かなり重視する<input type="radio" name="entry.483346271" required value="かなり重視する">
+                    </div>
+
+                    <p class="col-12 mb-2">多くの人が履修</p>
+                    <div class="ml-2 col-2 mb-3">全く重視しない<input type="radio" name="entry.80407326" required value="全く重視しない">
+                    </div>
+                    <div class="ml-2 col-2">重視しない<input type="radio" name="entry.80407326" required value="重視しない">
+                    </div>
+                    <div class="ml-2 col-2">どちらでもない<input type="radio" name="entry.80407326" required value="どちらでもない">
+                    </div>
+                    <div class="ml-2 col-2">重視する<input type="radio" name="entry.80407326" required value="重視する">
+                    </div>
+                    <div class="ml-2 col-2">かなり重視する<input type="radio" name="entry.80407326" required value="かなり重視する">
+                    </div>
+            </div>
+            </div>
+
+            <div style="background-color: burlywood;">
+            <p class="ml-3"><strong>プログラミングは講義以外でどのくらいの頻度でしますか</strong></p>
+            <div class="row mb-3 ml-3">
+                <div class="ml-2 col-2 mb-3">全くしない<input type="radio" name="entry.1221104167" required value="1">
+                </div>
+                <div class="ml-2 col-2">あまりしない<input type="radio" name="entry.1221104167" required value="2">
+                </div>
+                <div class="ml-2 col-2">どちらでもない<input type="radio" name="entry.1221104167" required value="3">
+                </div>
+                <div class="ml-2 col-2">たまにする<input type="radio" name="entry.1221104167" required value="4">
+                </div>
+                <div class="ml-2 col-2">よくする<input type="radio" name="entry.1221104167" required value="5">
+                </div>
+            </div>
+            </div>
+            <input type="submit" class="submit-btn btn btn-primary mb-5">
+        </form>
+        <p class="end-message">回答を提出しました</p>
+        <p class="false-message">送信に失敗しました</p>
+    </div>
+    <script
+    src="https://code.jquery.com/jquery-3.5.0.min.js"
+    integrity="sha256-xNzN2a4ltkB44Mc/Jz3pT4iU1cmeR0FkXs4pru/JxaQ="
+    crossorigin="anonymous"></script>
+  JavaScript
+  <script src="https://code.jquery.com/jquery-3.5.0.min.js" integrity="sha256-xNzN2a4ltkB44Mc/Jz3pT4iU1cmeR0FkXs4pru/JxaQ=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+    <style type="text/css">
+        .end-message{
+            display: none;
+        }
+        .false-message{
+            display: none;
+        }
+    </style>
+
+    <script>
+          $(document).ready(function () {
+
+            $('#form').submit(function (event) {
+                var formData = $('#form').serialize();
+                $.ajax({
+                    url: "https://docs.google.com/forms/u/0/d/e/1FAIpQLSdHFE2W1x-_Hhf0bGVWUljPxNcoHBk6nzV3xYk-PNGJwg-FgQ/formResponse",
+                    data: formData,
+                    type: "POST",
+                    dataType: "xml",
+                    statusCode: {
+                    0: function () {
+                        window.location.href = location.href + "registration?name=" + $("#academicNumber").val();
+                    },
+                    200: function () {
+                        $(".false-message").slideDown();
+                    }
+                    }
+                });
+                event.preventDefault();
+            });
+
+        });
+    </script>
+    </body>
+</html>

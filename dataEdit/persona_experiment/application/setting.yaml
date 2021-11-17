@@ -1,0 +1,12 @@
+setting.yaml
+
+client_config_backend: settings
+client_config:
+　client_id: 421117878034-krpq0vk49qnpgperm29jk5jiturpkcc3.apps.googleusercontent.com
+　client_secret: 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
+
+save_credentials: True
+save_credentials_backend: file
+save_credentials_file: credentials.json
+
+get_refresh_token: True

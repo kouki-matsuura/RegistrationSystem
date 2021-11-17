@@ -1,0 +1,348 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>履修登録</title>
+        <link rel='stylesheet' type="text/html" href="{% static 'style.css' %}" />
+        <script src="https://unpkg.com/vue@3.0.0/dist/vue.global.js"></script>
+        
+        <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.15/lodash.min.js">
+        </script>
+        <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
+        <script src="https://kit.fontawesome.com/12f9996926.js" crossorigin="anonymous"></script>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+        
+    </head>
+    <body style="background-color: beige;">
+        <div id="counter">
+            {% csrf_token %}
+            <header>
+                <div class="text-center">
+                    <h2 class="text-center">
+                        [[ getParam('name') ]]さんの履修登録
+                    </h2>
+                </div>
+            </header>
+            
+            <div id="result_modal" class="modal" tabindex="-1" role="dialog" style="display: none; overflow-y: scroll;">
+                <div class="modal-dialog" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title"><strong>履修登録確認</strong><br>これで問題はないですか？</h5>
+                      <button type="button" class="close" data-dismiss="modal" v-on:click="retry">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    <div class="modal-body">
+                      <div id="result"></div>
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-dismiss="modal" v-on:click="retry">やり直す</button>
+                      <button type="button" class="btn btn-primary" v-on:click="complete">完了</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-9  ml-2 row" style="background-color: #e3b3b3;">
+                        <div class="col-md-6 mt-3">
+                            <div id="timeTable_all">
+                                <table class="table text-center" border="1" style="border-collapse: collapse; border-style: solid; border-width:3px; background-color: white;">
+                                    <thead class="thead-light">
+                                        <tr>
+                                            <th>月</th>
+                                            <th>火</th>
+                                            <th>水</th>
+                                            <th>木</th>
+                                            <th>金</th>
+                                            <th>土</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="timeTable">
+                                        <tr v-for="(time,index) in myTimetable">
+                                            
+                                            <th v-on:click="choiceSubject_inTable(time[0])" class="monday align-items-center" style="height: 90px; width: 88px;">[[ time[0] ]]</th>
+                                            <th v-on:click="choiceSubject_inTable(time[1])" class="thuesday align-items-center" style="height: 90px; width: 88px">[[ time[1] ]]</th>
+                                            <th v-on:click="choiceSubject_inTable(time[2])" class="wednesday align-items-center" style="height: 90px; width: 88px">[[ time[2] ]]</th>
+                                            <th v-on:click="choiceSubject_inTable(time[3])" class="thirsday align-items-center" style="height: 90px; width: 88px">[[ time[3] ]]</th>
+                                            <th v-on:click="choiceSubject_inTable(time[4])" class="friday align-items-center" style="height: 90px; width: 88px">[[ time[4] ]]</th>
+                                            <th v-on:click="choiceSubject_inTable(time[5])" class="saturday align-items-center" style="height: 90px; width: 88px">[[ time[5] ]]</th>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <div v-on:click="choiceSubject_inNet" class="text-center mb-2" id="ネット講義">
+
+                                </div>
+                            </div>
+
+                            <div class="text-right mb-4" style="height: 30px;" >
+                                <button id="delete" v-on:click="deleteSubject" type="button" class="btn btn-danger mr-2 d-none" style="font-size: 16px;"><i class="fas fa-trash-alt"><strong> 削除([[ delete_choice_subject.length ]])</strong></i></button>
+                                <button type="button" class="btn btn-primary" v-on:click="save" style="font-size: 16px;"><strong>保存</strong></button>
+                            </div>
+                            エラー出力：
+                            <div id="error">なし</div>
+                            <table class="table text-center" border="1" style="background-color: white; border-collapse: collapse; border-style: solid; border-width: 3px;">
+                                <thead class="thead-light">
+                                    <tr style="height: 30px;">
+                                        <th scope="col" class="p-0">種別</th>
+                                        <th scope="col" class="p-0">登録単位数</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr >
+                                        <th scope="row" class="p-0" style="background-color: rgb(194, 107, 162);">必修</th>
+                                        <td class="p-0">[[ absolute_subject_count ]]</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row" class="p-0" style="background-color: rgb(148, 196, 180);">A群I類</th>
+                                        <td class="p-0">[[ AI_subject_count ]]</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row" class="p-0" style="background-color: rgb(159, 140, 198);">A群II類</th>
+                                        <td class="p-0">[[ AII_subject_count ]]</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row" class="p-0" style="background-color: moccasin;">C群</th>
+                                        <td class="p-0">[[ C_subject_count ]]</Td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            
+                        </div>
+                    
+                        <div class="accordion col-md-6" id="accordion"
+                        role="tablist" aria-multiselectable="true">
+                            <div class="card mb-2 mt-3">
+                                <div class="card-heeader" role="tab" id="headingOne">
+                                    <h5 class="mb-0">
+                                        <a class="collapsed text-body d-block p-3 m-n3 text-center" style="background-color: #ff8856; " data-toggle="collapse"
+                                        href="#collapseOne" role="button" aria-expanded="true" aria-controls="collapseOne">
+                                        必修科目<br><i class="fas fa-chevron-down"></i>
+                                        </a>
+                                    </h5>
+                                </div>
+                                <div id="collapseOne" class="collapse pt-3" role="tabpanel" aria-labelledby="headingOne"
+                                data-parent="#accordion">
+                                    <div class="d-flex flex-row bd-highlight mb-3 text-center align-items-center" style="background-color: #ffc7af;">
+                                        <div class="bd-highlight ml-3" style="width: 20%;">科目名</div>
+                                        <div class="bd-highlight ml-2" style="width: 20%;"> 科目コード</div>
+                                        <div class="bd-highlight" style="width: 20%;"> 教員名</div>
+                                        <div class="bd-highlight" style="width: 20%;"> 曜日</div>
+                                        <div style="width: 20%;"> </div>
+                                    </div>
+                                    <div id="absolute" class="d-flex flex-column bd-highlight mr-3 ml-3" v-for="(subject_data, index) in subjects_data.slice(0,5)">
+                                        <div class="d-flex flex-row bd-highlight mb-2  text-center align-items-center"
+                                        style="height: 40px; font-size: 13px; background-color: #ffdbc9; ">
+                                        <div class="bd-highlight" style="width: 23%;">[[ subject_data.科目名 ]]</div>
+                                        <div class="bd-highlight" style="width: 20%;">[[ subject_data.科目コード ]]</div>
+                                        <div class="bd-highlight" style="width: 20%;">[[ subject_data.教員名 ]]</div>
+                                        <div class="bd-highlight" style="width: 20%;">[[ subject_data.曜日 ]]</div>
+                                        <div class="ml-2">
+                                            <button type="button" v-on:click="setSubject(subject_data.科目名, subject_data.曜日, 'absolute')" class="btn btn-primary mr-1" style="font-size: 8px"><i class="fas fa-plus"> 追加</i></button>
+                                        </div>
+                                        </div>
+                                    </div>
+                                    
+                                </div>
+                            </div>
+
+                            <div class="card mb-2">
+                                <div class="card-heeader" role="tab" id="headingTwo">
+                                    <h5 class="mb-0">
+                                        <a class="collapsed text-body d-block p-3 m-n3 text-center" style="background-color: #ff8856;" data-toggle="collapse"
+                                        href="#collapseTwo" role="button" aria-expanded="false" aria-controls="collapseTwo">
+                                        A群I類<br><i class="fas fa-chevron-down"></i>
+                                        </a>
+                                    </h5>
+                                </div>
+                                <div id="collapseTwo" class="collapse pt-3" role="tabpanel" aria-labelledby="headingTwo"
+                                data-parent="#accordion">
+                                    <div class="d-flex flex-row bd-highlight mb-3 text-center align-items-center " style="background-color: #ffc7af;">
+                                        <div class="bd-highlight ml-3" style="width: 20%;">科目名</div>
+                                        <div class="bd-highlight ml-2" style="width: 20%;"> 科目コード</div>
+                                        <div class="bd-highlight" style="width: 20%;"> 教員名</div>
+                                        <div class="bd-highlight" style="width: 20%;"> 曜日</div>
+                                        <div style="width: 20%;"> </div>
+                                    </div>
+                                    <div id="AI" class="d-flex flex-column bd-highlight mr-3 ml-3" v-for="(subject_data, index) in subjects_data.slice(5,19)">
+                                        <div class="d-flex flex-row bd-highlight mb-2  text-center align-items-center"
+                                        style="height: 40px; font-size: 13px; background-color: #ffdbc9; ">
+                                        <div class="bd-highlight" style="width: 23%;">[[ subject_data.科目名 ]]</div>
+                                        <div class="bd-highlight" style="width: 20%;">[[ subject_data.科目コード ]]</div>
+                                        <div class="bd-highlight" style="width: 20%;">[[ subject_data.教員名 ]]</div>
+                                        <div class="bd-highlight" style="width: 20%;">[[ subject_data.曜日 ]]</div>
+                                        <div class="ml-2">
+                                            <button type="button" v-on:click="setSubject(subject_data.科目名, subject_data.曜日, 'AI')" class="btn btn-primary mr-1" style="font-size: 8px"><i class="fas fa-plus"> 追加</i></button>
+                                        </div>
+                                        </div>
+                                    </div>
+                                        
+                                </div>
+                            </div>
+
+                            <div class="card mb-2">
+                                <div class="card-heeader" role="tab" id="headingThree">
+                                    <h5 class="mb-0">
+                                        <a class="collapsed text-body d-block p-3 m-n3 text-center" style="background-color: #ff8856;" data-toggle="collapse"
+                                        href="#collapseThree" role="button" aria-expanded="false" aria-controls="collapseThree">
+                                        A群II類<br><i class="fas fa-chevron-down"></i>
+                                        </a>
+                                    </h5>
+                                </div>
+                                <div id="collapseThree" class="collapse pt-3" role="tabpanel" aria-labelledby="headingThree"
+                                data-parent="#accordion">
+                                    <div class="d-flex flex-row bd-highlight mb-3 text-center align-items-center " style="background-color: #ffc7af;">
+                                        <div class="bd-highlight ml-3" style="width: 20%;">科目名</div>
+                                        <div class="bd-highlight ml-2" style="width: 20%;"> 科目コード</div>
+                                        <div class="bd-highlight" style="width: 20%;"> 教員名</div>
+                                        <div class="bd-highlight" style="width: 20%;"> 曜日</div>
+                                        <div style="width: 20%;"> </div>
+                                    </div>
+                                    <div id="AII" class="d-flex flex-column bd-highlight mr-3 ml-3" v-for="(subject_data, index) in subjects_data.slice(19,22)">
+                                        <div class="d-flex flex-row bd-highlight mb-2  text-center align-items-center"
+                                        style="height: 40px; font-size: 13px; background-color: #ffdbc9; ">
+                                            <div class="bd-highlight" style="width: 23%;">[[ subject_data.科目名 ]]</div>
+                                            <div class="bd-highlight" style="width: 20%;">[[ subject_data.科目コード ]]</div>
+                                            <div class="bd-highlight" style="width: 20%;">[[ subject_data.教員名 ]]</div>
+                                            <div class="bd-highlight" style="width: 20%;">[[ subject_data.曜日 ]]</div>
+                                            <div class="ml-2">
+                                                <button type="button" v-on:click="setSubject(subject_data.科目名, subject_data.曜日, 'AII')" class="btn btn-primary mr-1 " style="font-size: 8px"><i class="fas fa-plus"> 追加</i></button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                </div>
+                            </div>
+
+                            <div class="card mb-2">
+                                <div class="card-heeader" role="tab" id="headingFour">
+                                    <h5 class="mb-0">
+                                        <a class="collapsed text-body d-block p-3 m-n3 text-center" style="background-color: #ff8856;" data-toggle="collapse"
+                                        href="#collapseFour" role="button" aria-expanded="false" aria-controls="collapseFour">
+                                        C群<br><i class="fas fa-chevron-down"></i>
+                                        </a>
+                                    </h5>
+                                </div>
+                                <div id="collapseFour" class="collapse pt-3" role="tabpanel" aria-labelledby="headingFour"
+                                data-parent="#accordion">
+                                    <div class="d-flex flex-row bd-highlight mb-3 text-center align-items-center " style="background-color: #ffc7af;">
+                                        <div class="bd-highlight ml-3" style="width: 20%;">科目名</div>
+                                        <div class="bd-highlight ml-2" style="width: 20%;"> 科目コード</div>
+                                        <div class="bd-highlight" style="width: 20%;"> 教員名</div>
+                                        <div class="bd-highlight" style="width: 20%;"> 曜日</div>
+                                        <div style="width: 20%;"> </div>
+                                    </div>
+                                    <div id="C" class="d-flex flex-column bd-highlight mr-3 ml-3" v-for="(subject_data, index) in subjects_data.slice(22,23)">
+                                        <div class="d-flex flex-row bd-highlight mb-2  text-center align-items-center"
+                                        style="height: 40px; font-size: 13px; background-color: #ffdbc9; ">
+                                        <div class="bd-highlight" style="width: 23%;">[[ subject_data.科目名 ]]</div>
+                                        <div class="bd-highlight" style="width: 20%;">[[ subject_data.科目コード ]]</div>
+                                        <div class="bd-highlight" style="width: 20%;">[[ subject_data.教員名 ]]</div>
+                                        <div class="bd-highlight" style="width: 20%;">[[ subject_data.曜日 ]]</div>
+                                        <div class="ml-2">
+                                            <button type="button" v-on:click="setSubject(subject_data.科目名, subject_data.曜日, 'C')" class="btn btn-primary mr-1" style="font-size: 8px"><i class="fas fa-plus"> 追加</i></button>
+                                        </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 ml-1 " >
+                        <div id="example-2" class="carousel slide mb-3" style="height: 650px; background-color: lightblue;">
+                            <ol class="carousel-indicators bg-info">
+                                <li data-target="#example-2" data-slide-to="0" class="active"></li>
+                                <li data-target="#example-2" data-slide-to="1"></li>
+                                <li data-target="#example-2" data-slide-to="2"></li>
+                            </ol>
+                            <div class="carousel-inner" >
+                            <div class="carousel-item active">
+                                <div class="container-fluid text-center" >
+                                    <div class="row mb-2">
+                                        <div class="col-6 bg-info mb-2"><strong>学年</strong></div>
+                                        <div class="col-6 bg-info mb-2"><strong>性別</strong></div>
+                                        <div class="col-6" id="year1">データなし</div>
+                                        <div class="col-6" id="sex1">データなし</div>
+                                    </div>
+                                    <div class="row bg-info mb-2">
+                                        <div class="col-5">科目名</div>
+                                        <div class="col-4">満足度</div>
+                                        <div class="col-3">　</div>
+                                    </div>
+                                    <div id="satisfy_data" class="row" ></div>
+                                    
+                                    
+                                </div>
+                                
+                            </div>
+                            <div class="carousel-item">
+                                <div class="container-fluid text-center ">
+                                    <div class="row mb-2">
+                                        <div class="col-6 bg-info mb-2"><strong>学年</strong></div>
+                                        <div class="col-6 bg-info mb-2"><strong>性別</strong></div>
+                                        <div class="col-6" id="year2">データなし</div>
+                                        <div class="col-6" id="sex2">データなし</div>
+                                    </div>
+                                    <div class="row bg-info mb-2">
+                                        <div class="col-5">科目名</div>
+                                        <div class="col-4">満足度</div>
+                                        <div class="col-3">　</div>
+                                    </div>
+                                    <div class="row" id="satisfy_data2"></div>
+                                </div>
+                            </div>
+                            <div class="carousel-item">
+                                <div class="container-fluid text-center">
+                                    <div class="row mb-2">
+                                        <div class="col-6 bg-info mb-2"><strong>学年</strong></div>
+                                        <div class="col-6 bg-info mb-2"><strong>性別</strong></div>
+                                        <div class="col-6" id="year3">データなし</div>
+                                        <div class="col-6" id="sex3">データなし</div>
+                                    </div>
+                                    <div class="row bg-info mb-2">
+                                        <div class="col-5">科目名</div>
+                                        <div class="col-4">満足度</div>
+                                        <div class="col-3">　</div>
+                                    </div>
+                                    <div class="row" id="satisfy_data3"></div>
+                                </div>
+                            </div>
+                            
+                            </div>
+                            <a class="carousel-control-prev" href="#example-2" role="button" data-slide="prev">
+                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                <span class="sr-only">Previous</span>
+                            </a>
+                            <a class="carousel-control-next" href="#example-2" role="button" data-slide="next">
+                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                <span class="sr-only">Next</span>
+                            </a>
+
+                            
+                        </div>
+                    </div>
+                    
+                </div> 
+            </div>    
+            <hr>  
+        </div>
+        <script>
+            $('.carousel-control-next').css('width','5%');
+            $('.carousel-control-prev').css('width','5%');
+        </script>
+        
+        <script src="{% static 'registration.js' %}"></script>
+        
+        
+    </body>
+    
+</html>
